@@ -1,3 +1,7 @@
+@import "tailwindcss/preflight"; /* reset bawaan */
+@import "tailwindcss/utilities"; /* semua utilitas seperti bg-red-500, p-6, dll */
+
+
 :root {
   font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
   line-height: 1.5;
