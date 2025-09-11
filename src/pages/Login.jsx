@@ -45,7 +45,7 @@ function Login() {
                       {err && <div className="error-message">{err}</div>}
                       <form onSubmit={handleSubmit} className="auth-form space-y-4 md:space-y-6">
                       
-                         {/* email inputi */}
+                         {/* email input */}
                         <div>
                           <label for="email" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Your email</label> 
                           <input type="email" placeholder="Email"
@@ -65,14 +65,18 @@ function Login() {
                          <button 
                              className='w-full text-white bg-blue-600 hover:bg-blue-700 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-3 text-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800' 
                              type="submit">Login</button>
+
+                          {/* divider */}
                          <div className="relative flex items-center">
                           <div className="flex-grow border-t border-gray-300"></div>
                           <span className="flex-shrink mx-4 text-gray-400">Or</span>
                           <div className="flex-grow border-t border-gray-300"></div>
                          </div>
+                          {/* google button */}
                           <button className='w-full flex justify-center items-center text-blue-400 bg-white hover:bg-gray-100 focus:ring-4 font-semibold rounded-lg text-md px-5 py-3 text-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800' 
                           onClick={handleGoogle}><img src="/images/google.svg" className=' w-5 h-5 mx-2' alt="Logo" /> Login with Google</button>
                           
+                          {/* sign up link */}
                           <p className='text-medium font-light text-gray-400 dark:text-gray-400"'>
                                 Don’t have an account? <Link to="/signup" className='font-medium text-primary-600 hover:underline dark:text-primary-500'>
                                 Sign up</Link></p>
