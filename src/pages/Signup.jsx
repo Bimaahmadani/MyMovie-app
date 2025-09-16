@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useAuth } from '../contexts/AuthContext';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useNavigate, useLocation } from 'react-router-dom';
 // import '../css/Auth.css';
 
 function Signup() {
@@ -11,6 +11,8 @@ function Signup() {
   const [err, setErr] = useState('');
   const navigate = useNavigate();
   const [confirmPassword, setConfirmPassword] = useState("");
+    const location = useLocation();
+    const from = location.state?.from?.pathname || '/';
 
   const handleSubmit = async (e) => {
   e.preventDefault();
@@ -43,7 +45,7 @@ function Signup() {
     await updateProfile(user, { displayName: finalUsername });
 
     // Setelah signup berhasil → arahkan ke Home (atau halaman lain)
-    navigate('/', { replace: true });
+    navigate(from, { replace: true });
   } catch (e) {
     setErr(e.message);
   }

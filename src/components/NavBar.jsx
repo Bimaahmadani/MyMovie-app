@@ -17,7 +17,7 @@ function NavBar() {
         {user ? (
           <>
             <span className="nav-user">{user.email}</span>
-            <button onClick={signOut} className="nav-link btn-link">Logout</button>
+            <a onClick={signOut} className="nav-link btn-link">Logout</a>
           </>
         ) : (
           <>
