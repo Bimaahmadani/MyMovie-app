@@ -22,7 +22,7 @@ function MovieCard ({movie}){
             </div>
         </div>
         <div className="movie-info">
-            <h3>{movie.title}</h3>
+            <h3 className=' text-white font-semibold'>{movie.title}</h3>
             <p>
                 {movie.release_date?.split('-')[0]}
             </p>
