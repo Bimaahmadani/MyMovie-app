@@ -15,29 +15,59 @@ function Signup() {
   const [confirmPassword, setConfirmPassword] = useState("");
   const location = useLocation();
   const from = location.state?.from?.pathname || '/';
+  const [errors, setErrors] = useState({
+  username: "",
+  email: "",
+  password: "",
+  confirmPassword: "",
+});
 
-  const handleSubmit = async (e) => {
+  const validateField = (name, value) => {
+  let message = "";
+
+  switch (name) {
+    case "username":
+      if (!value.trim()) message = "Username is required";
+      else if (value.length < 3) message = "Username must be at least 3 characters";
+      break;
+
+    case "email":
+      if (!/\S+@\S+\.\S+/.test(value)) message = "Invalid email address";
+      break;
+
+    case "password":
+      if (value.length < 6) message = "Password should be at least 6 characters";
+      break;
+
+    case "confirmPassword":
+      if (value !== password) message = "Passwords do not match";
+      break;
+
+    default:
+      break;
+  }
+
+  setErrors((prev) => ({ ...prev, [name]: message }));
+};
+
+
+const handleSubmit = async (e) => {
   e.preventDefault();
-  setErr("");
 
-  if (password !== confirmPassword) {
-    setErr("Passwords do not match!");
+  // Pastikan tidak ada error lokal
+  if (Object.values(errors).some((msg) => msg !== "")) {
     return;
   }
 
   try {
     const userCredential = await createUserWithEmailAndPassword(auth, email, password);
-
-    // simpan username ke Firebase displayName
     await updateProfile(userCredential.user, { displayName: username });
-
-    console.log("User created:", userCredential.user);
-
-    // redirect ke homepage
-    navigate(from, { replace: true });
+    navigate("/");
   } catch (error) {
+    if (error.code === "auth/email-already-in-use") {
+      setErrors((prev) => ({ ...prev, email: "This email is already registered" }));
+    }
     console.error(error);
-    setErr(error.message);
   }
 };
 
@@ -54,9 +84,6 @@ function Signup() {
   };
 
 
-
-
-
   return (
     <div className="auth">
 
@@ -70,46 +97,79 @@ function Signup() {
                   
                         {err && <div className="error-message">{err}</div>}
                        <form onSubmit={handleSubmit} className="auth-form space-y-4 md:space-y-6">
-                            {/* Username */}
-                            <input
-                              type="text"
-                              placeholder="Username"
-                              className="bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                              value={username}
-                              onChange={(e) => setUsername(e.target.value)}
-                              required
-                            />
+                           {/* Username */}
+                            <div>
+                              <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Username</label>
+                              <input
+                                type="text"
+                                value={username}
+                                onChange={(e) => {
+                                  setUsername(e.target.value);
+                                  validateField("username", e.target.value);
+                                }}
+                                onBlur={(e) => validateField("username", e.target.value)}
+                                className={`w-full p-2.5 border rounded-lg ${
+                                  errors.username ? "border-red-500" : "border-gray-300"
+                                }`}
+                              />
+                              {errors.username && <p className="text-red-500 text-sm">{errors.username}</p>}
+                            </div>
 
                             {/* Email */}
-                            <input
-                              type="email"
-                              placeholder="Email"
-                              className="bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                              value={email}
-                              onChange={(e) => setEmail(e.target.value)}
-                              required
-                            />
+                            <div>
+                              <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Email</label>
+                              <input
+                                type="email"
+                                value={email}
+                                onChange={(e) => {
+                                  setEmail(e.target.value);
+                                  validateField("email", e.target.value);
+                                }}
+                                onBlur={(e) => validateField("email", e.target.value)}
+                                className={`w-full p-2.5 border rounded-lg ${
+                                  errors.email ? "border-red-500" : "border-gray-300"
+                                }`}
+                              />
+                              {errors.email && <p className="text-red-500 text-sm">{errors.email}</p>}
+                            </div>
 
                             {/* Password */}
-                            <input
-                              type="password"
-                              placeholder="Password"
-                              className="bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                              value={password}
-                              onChange={(e) => setPassword(e.target.value)}
-                              required
-                            />
+                            <div>
+                              <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Password</label>
+                              <input
+                                type="password"
+                                value={password}
+                                onChange={(e) => {
+                                  setPassword(e.target.value);
+                                  validateField("password", e.target.value);
+                                }}
+                                onBlur={(e) => validateField("password", e.target.value)}
+                                className={`w-full p-2.5 border rounded-lg ${
+                                  errors.password ? "border-red-500" : "border-gray-300"
+                                }`}
+                              />
+                              {errors.password && <p className="text-red-500 text-sm">{errors.password}</p>}
+                            </div>
 
                             {/* Confirm Password */}
-                            <input
-                              type="password"
-                              placeholder="Confirm Password"
-                              className="bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                              value={confirmPassword}
-                              onChange={(e) => setConfirmPassword(e.target.value)}
-                              required
-                            />
+                            <div>
+                              <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Confirm Password</label>
+                              <input
+                                type="password"
+                                value={confirmPassword}
+                                onChange={(e) => {
+                                  setConfirmPassword(e.target.value);
+                                  validateField("confirmPassword", e.target.value);
+                                }}
+                                onBlur={(e) => validateField("confirmPassword", e.target.value)}
+                                className={`w-full p-2.5 border rounded-lg ${
+                                  errors.confirmPassword ? "border-red-500" : "border-gray-300"
+                                }`}
+                              />
+                              {errors.confirmPassword && <p className="text-red-500 text-sm">{errors.confirmPassword}</p>}
+                            </div>
 
+                            {/* submit button */}
                             <button
                               type="submit"
                               className="w-full text-white bg-blue-600 hover:bg-blue-700 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-3 text-center"
@@ -120,7 +180,7 @@ function Signup() {
                             
 
                           </form>
- {/* divider */}
+                          {/* divider */}
                             <div className="relative flex items-center">
                               <div className="flex-grow border-t border-gray-300"></div>
                               <span className="flex-shrink mx-4 text-gray-400">Or</span>
