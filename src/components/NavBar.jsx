@@ -26,7 +26,9 @@ function NavBar() {
            <div class="flex justify-center space-x-4 ">
               {user ? (
               <>
-                <span className="nav-user text-white">{user.email}</span>
+                <span className="nav-user text-white">
+                  {user.displayName || user.email}
+                </span>
                 <a onClick={signOut} className="nav-link btn-link">Logout</a>
               </>
             ) : (
