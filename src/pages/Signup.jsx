@@ -108,11 +108,11 @@ const handleSubmit = async (e) => {
                                   validateField("username", e.target.value);
                                 }}
                                 onBlur={(e) => validateField("username", e.target.value)}
-                                className={`w-full p-2.5 border rounded-lg bg-gray-700 ${
+                                className={`w-full p-2.5 border rounded-lg bg-gray-700 text-white ${
                                   errors.username ? "border-red-500" : "border-gray-300"
                                 }`}
                               />
-                              {errors.username && <p className="text-red-500 text-sm">{errors.username}</p>}
+                              {errors.username && <div className="flex justify-start space-x-1.5 py-1"><img src="/images/triangle-exclamation.svg" className='w-4' alt="" /><p className='text-red-500 text-sm font-medium'>{errors.username}</p></div>}
                             </div>
 
                             {/* Email */}
@@ -126,11 +126,11 @@ const handleSubmit = async (e) => {
                                   validateField("email", e.target.value);
                                 }}
                                 onBlur={(e) => validateField("email", e.target.value)}
-                                className={`w-full p-2.5 border rounded-lg bg-gray-700 ${
+                                className={`w-full p-2.5 border rounded-lg bg-gray-700 text-white ${
                                   errors.email ? "border-red-500" : "border-gray-300"
                                 }`}
                               />
-                              {errors.email && <p className="text-red-500 text-sm">{errors.email}</p>}
+                              {errors.email && <div className="flex justify-start space-x-1.5 py-1"><img src="/images/triangle-exclamation.svg" className='w-4' alt="" /><p className="text-red-500 text-sm font-medium">{errors.email}</p></div>}
                             </div>
 
                             {/* Password */}
@@ -144,11 +144,11 @@ const handleSubmit = async (e) => {
                                   validateField("password", e.target.value);
                                 }}
                                 onBlur={(e) => validateField("password", e.target.value)}
-                                className={`w-full p-2.5 border rounded-lg bg-gray-700 ${
+                                className={`w-full p-2.5 border rounded-lg bg-gray-700 text-white ${
                                   errors.password ? "border-red-500" : "border-gray-300"
                                 }`}
                               />
-                              {errors.password && <p className="text-red-500 text-sm">{errors.password}</p>}
+                              {errors.password && <div className="flex justify-start space-x-1.5 py-1"><img src="/images/triangle-exclamation.svg" className='w-4' alt="" /><p className="text-red-500 text-sm font-medium">{errors.password}</p></div>}
                             </div>
 
                             {/* Confirm Password */}
@@ -162,11 +162,11 @@ const handleSubmit = async (e) => {
                                   validateField("confirmPassword", e.target.value);
                                 }}
                                 onBlur={(e) => validateField("confirmPassword", e.target.value)}
-                                className={`w-full p-2.5 border rounded-lg bg-gray-700 ${
+                                className={`w-full p-2.5 border rounded-lg bg-gray-700 text-white ${
                                   errors.confirmPassword ? "border-red-500" : "border-gray-300"
                                 }`}
                               />
-                              {errors.confirmPassword && <p className="text-red-500 text-sm">{errors.confirmPassword}</p>}
+                              {errors.confirmPassword && <div className="flex justify-start space-x-1.5 py-1"><img src="/images/triangle-exclamation.svg" className='w-4' alt="" /><p className="text-red-500 text-sm font-medium">{errors.confirmPassword}</p></div>}
                             </div>
 
                             {/* submit button */}
