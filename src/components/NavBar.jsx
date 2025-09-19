@@ -23,13 +23,13 @@ function NavBar() {
             </li>
             </ul>
           </div>
-           <div class="flex justify-center space-x-4 ">
+           <div class="flex justify-center items-center space-x-4 ">
               {user ? (
               <>
-                <span className="nav-user text-white">
+                <span className="nav-user text-white font-semibold px-2">
                   {user.displayName || user.email}
                 </span>
-                <a onClick={signOut} className="nav-link btn-link">Logout</a>
+                <button onClick={signOut} className="btn-link bg-red-500 hover:bg-red-700 focus:bg-red-700 rounded-lg px-4 py-1 font-semibold"><span className="text-white font-semibold text-md">Logout</span></button>
               </>
             ) : (
               <>
